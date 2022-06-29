@@ -1,0 +1,27 @@
+h1{
+    text-align: center;
+}
+.nav-link active{
+    text-emphasis-color: blueviolet;
+}
+.header {
+    background-color: #F1F1F1;
+    text-align: center;
+    padding: 20px;
+  }
+body {
+    margin: 0;
+    font-family: var(--bs-body-font-family);
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--bs-body-line-height);
+    color: #141619;
+    text-align: var(--bs-body-text-align);
+    background-color: #551f6b;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.form-select{
+    align-content: center;
+}
