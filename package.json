@@ -21,9 +21,11 @@
   "homepage": "https://github.com/soumya-sasidharan/Q-A-app#readme",
   "dependencies": {
     "axios": "^0.27.2",
+    "bootstrap": "^5.1.3",
     "dotenv": "^16.0.1",
     "next": "^12.2.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.4.0",
     "react-dom": "^18.2.0",
     "realm-web": "^1.7.0"
   }
