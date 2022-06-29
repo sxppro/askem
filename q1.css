@@ -14,5 +14,7 @@
     border: 5px;
     border-style: solid;
     border-color: aqua;
+    font-weight: 100;
+    font-style: italic;
 
 }
