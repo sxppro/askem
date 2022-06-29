@@ -1,0 +1,22 @@
+{
+  "name": "qa-app",
+  "version": "1.0.0",
+  "description": "Q&A App for Accenture's Tech Bootcamp :)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soumya-sasidharan/Q-A-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soumya-sasidharan/Q-A-app/issues"
+  },
+  "homepage": "https://github.com/soumya-sasidharan/Q-A-app#readme",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
+}
