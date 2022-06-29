@@ -1,0 +1,20 @@
+
+.main{
+    border: 5px;
+    border-style: solid;
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+}
+.question{
+    border: 5px;
+    border-style: solid;
+    border-color: red;
+}
+.description{
+    border: 5px;
+    border-style: solid;
+    border-color: aqua;
+    font-weight: 100;
+    font-style: italic;
+
+}
