@@ -22,15 +22,9 @@ const headers = {
 const query = {
   operationName: '',
   query: `query {
-    customers {
+    questions {
       _id
-      name
-      email
-      address
-      accounts {
-        account_id
-        limit
-      }
+      content
     }
   }`,
   variables: {},
