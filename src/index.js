@@ -19,6 +19,7 @@ const headers = {
   Authorization: `Bearer ${token}`,
 };
 
+// Fetch questions
 const query = {
   operationName: '',
   query: `query {
