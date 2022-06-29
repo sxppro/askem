@@ -31,12 +31,6 @@ const query = {
   variables: {},
 };
 
-const options = {
-  method: 'POST',
-  headers: headers,
-  body: JSON.stringify(query),
-};
-
 (async function fetchData() {
   try {
     const response = await axios({
