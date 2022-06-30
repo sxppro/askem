@@ -1,13 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CustomNavbar from '../components/CustomNavbar';
-import CustomListView from '../components/CustomListView';
+import { ApolloProvider } from '@apollo/client';
+import SSRProvider from 'react-bootstrap/SSRProvider';
+import client from '../utils/graphql';
+import Home from './index';
 
-const Homepage = () => {
+const Homepage = ({ Component, pageProps }) => {
   return (
-    <>
-      <CustomNavbar />
-      <CustomListView />
-    </>
+    <ApolloProvider client={client}>
+      <SSRProvider>
+        <Component {...pageProps} />
+      </SSRProvider>
+    </ApolloProvider>
   );
 };
 
