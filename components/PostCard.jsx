@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Router from 'next/router';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Card, Form, Button } from 'react-bootstrap';
+import Loading from './Loading';
 
 const ADD_ANSWER = gql`
   mutation insertOneAnswer($data: AnswerInsertInput!) {
@@ -34,11 +33,27 @@ const UPDATE_POST = gql`
   }
 `;
 
+const MONTH_NAMES = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 const PostCard = ({ post }) => {
   const { _id, content, time_posted } = post;
-  const [addAnswer, { error: newAnswerError }] = useMutation(ADD_ANSWER);
-  const [updatePost, { data: updatedPost }] = useMutation(UPDATE_POST);
+  const [addAnswer, { loading, error: newAnswerError }] =
+    useMutation(ADD_ANSWER);
   const [comment, setComment] = useState('');
+  const date = new Date(time_posted);
 
   // Sets comment
   const updateComment = ({ target: { value } }) => {
@@ -78,7 +93,11 @@ const PostCard = ({ post }) => {
             className="timestamp"
             style={{ fontWeight: 'bold', marginBottom: '5px' }}
           >
-            {time_posted ? time_posted : ''}
+            {time_posted && date
+              ? `${
+                  MONTH_NAMES[date.getMonth()]
+                } ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString()}`
+              : ''}
           </Card.Text>
           <Card.Title className="title fs-1 mb-3" style={{ marginTop: '20px' }}>
             {content && content.title ? content.title : ''}
@@ -99,13 +118,15 @@ const PostCard = ({ post }) => {
         </Card.Body>
       </Card>
       <Button
+        disabled={loading}
         variant="primary"
         type="submit"
         form="answer-form"
         className="postButton mt-2"
         style={{ float: 'right', marginRight: '20px' }}
       >
-        Comment
+        {loading ? <Loading /> : ''}
+        {loading ? ' Submitting ...' : 'Comment'}
       </Button>
     </>
   );

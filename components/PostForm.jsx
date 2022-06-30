@@ -8,7 +8,6 @@ const ADD_POST = gql`
     insertOneQandA(data: $data) {
       _id
       content {
-        comments
         description
         title
       }
@@ -58,7 +57,6 @@ const PostForm = ({ handleClose }) => {
       variables: {
         data: {
           content: {
-            comments: [],
             title: title,
             description: desc,
           },
