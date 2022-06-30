@@ -6,7 +6,7 @@ import { gql } from '@apollo/client';
 const Home = ({ data }) => {
   return (
     <>
-      <CustomNavbar />
+      <CustomNavbar></CustomNavbar>
       <CustomListView data={data} />
       {/* {data.map((question) => {
         console.log(question.content.title);
