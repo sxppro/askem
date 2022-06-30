@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
+import PostForm from './PostForm';
 
 const SubmitPost = () => {
   const [show, setShow] = useState(false);
@@ -19,28 +19,13 @@ const SubmitPost = () => {
           <Modal.Title>Submit a New Question</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            {/* Post title */}
-            <Form.Group className="mb-3">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                size="lg"
-                type="text"
-                placeholder="What do you want to ask?"
-              ></Form.Control>
-            </Form.Group>
-            {/* Post description */}
-            <Form.Group className="mb-3">
-              <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={3}></Form.Control>
-            </Form.Group>
-          </Form>
+          <PostForm handleClose={handleClose} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" type="submit" form="post-form">
             Submit
           </Button>
         </Modal.Footer>
