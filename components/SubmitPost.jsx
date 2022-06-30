@@ -10,7 +10,11 @@ const SubmitPost = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button
+        variant="primary"
+        onClick={handleShow}
+        style={{ float: 'right', margin: 'auto' }}
+      >
         New Question
       </Button>
 

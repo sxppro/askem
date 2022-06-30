@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import Container from 'react-bootstrap/Container';
 import CustomNavbar from '../components/CustomNavbar';
 import CustomListView from '../components/CustomListView';
 import SubmitPost from '../components/SubmitPost';
@@ -8,8 +9,10 @@ const Home = ({ data }) => {
   return (
     <>
       <CustomNavbar></CustomNavbar>
-      <CustomListView data={data} />
-      <SubmitPost />
+      <Container>
+        <CustomListView data={data} />
+        <SubmitPost />
+      </Container>
     </>
   );
 };
