@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ApolloProvider } from '@apollo/client';
 import SSRProvider from 'react-bootstrap/SSRProvider';
 import client from '../utils/graphql';
-import Home from './index';
 
 const Homepage = ({ Component, pageProps }) => {
   return (

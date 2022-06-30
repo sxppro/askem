@@ -23,9 +23,12 @@ const headers = {
 const query = {
   operationName: '',
   query: `query {
-    questions {
+    qandAS {
       _id
-      content
+      content {
+        title
+        description
+      }
     }
   }`,
   variables: {},

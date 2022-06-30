@@ -31,5 +31,9 @@
     "react-bootstrap": "^2.4.0",
     "react-dom": "^18.2.0",
     "realm-web": "^1.7.0"
+  },
+  "devDependencies": {
+    "eslint": "8.18.0",
+    "eslint-config-next": "12.2.0"
   }
 }

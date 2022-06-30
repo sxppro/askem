@@ -1,16 +1,15 @@
+import { gql } from '@apollo/client';
 import CustomNavbar from '../components/CustomNavbar';
 import CustomListView from '../components/CustomListView';
+import SubmitPost from '../components/SubmitPost';
 import client from '../utils/graphql';
-import { gql } from '@apollo/client';
 
 const Home = ({ data }) => {
   return (
     <>
       <CustomNavbar></CustomNavbar>
       <CustomListView data={data} />
-      {/* {data.map((question) => {
-        console.log(question.content.title);
-      })} */}
+      <SubmitPost />
     </>
   );
 };
@@ -29,7 +28,6 @@ export async function getStaticProps() {
       }
     `,
   });
-  console.log({ props: { data } });
   return { props: { data } };
 }
 
