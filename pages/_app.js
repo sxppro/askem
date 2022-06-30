@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../style.css';
 import { ApolloProvider } from '@apollo/client';
 import SSRProvider from 'react-bootstrap/SSRProvider';
 import client from '../utils/graphql';
