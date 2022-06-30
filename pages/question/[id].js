@@ -1,31 +1,44 @@
 import { gql } from '@apollo/client';
 import Container from 'react-bootstrap/Container';
+import Stack from 'react-bootstrap/Stack';
 import client from '../../utils/graphql';
 import CustomNavbar from '../../components/CustomNavbar';
 import PostCard from '../../components/PostCard';
+import Answer from '../../components/Answer';
 
-const Post = ({ data }) => {
+const Post = ({ data, answers }) => {
   const post = data && data.qandA ? data.qandA : null;
 
   return (
     <>
       <CustomNavbar />
-      <Container>
-        <PostCard post={post} />
-      </Container>
+      <Stack>
+        <Container>
+          <PostCard post={post} />
+        </Container>
+        <Stack gap={4}>
+          {answers &&
+            answers.map(({ _id, content }) => {
+              return <Answer key={_id} answer={content} />;
+            })}
+        </Stack>
+      </Stack>
     </>
   );
 };
 
 export async function getServerSideProps({ params }) {
   const { id } = params;
-  const { data } = await client.query({
+  const { data: questions } = await client.query({
     query: gql`
       query qandA($query: QandAQueryInput) {
         qandA(query: $query) {
           _id
           content {
-            comments
+            comments {
+              _id
+              content
+            }
             description
             title
           }
@@ -36,8 +49,32 @@ export async function getServerSideProps({ params }) {
     `,
     variables: { query: { _id: id } },
   });
-  console.log(data);
-  return { props: { data: data || null } };
+  const { data: answers } = await client.query({
+    query: gql`
+      query answers(
+        $query: AnswerQueryInput
+        $limit: Int
+        $sortBy: AnswerSortByInput
+      ) {
+        answers(query: $query, limit: $limit, sortBy: $sortBy) {
+          _id
+          content
+          questionId
+        }
+      }
+    `,
+    variables: {
+      query: {
+        questionId: id,
+      },
+    },
+  });
+  return {
+    props: {
+      data: questions || null,
+      answers: answers.answers ? answers.answers : null,
+    },
+  };
 }
 
 export default Post;

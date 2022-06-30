@@ -9,7 +9,7 @@ const Home = ({ data }) => {
   return (
     <>
       <CustomNavbar></CustomNavbar>
-      <Container>
+      <Container className="mt-3">
         <CustomListView data={data} />
         <SubmitPost />
       </Container>

@@ -19,13 +19,18 @@ const ADD_POST = gql`
 `;
 
 const GET_POSTS = gql`
-  query {
-    qandAS {
+  query qandAS(
+    $query: QandAQueryInput
+    $limit: Int
+    $sortBy: QandASortByInput
+  ) {
+    qandAS(query: $query, limit: $limit, sortBy: $sortBy) {
       _id
       content {
-        title
         description
+        title
       }
+      time_posted
     }
   }
 `;
@@ -48,7 +53,6 @@ const PostForm = ({ handleClose }) => {
   // Handles post submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(title);
     // Insert to database
     await addPost({
       variables: {
