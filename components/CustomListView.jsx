@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 const CustomListView = ({ data }) => {
@@ -6,8 +7,18 @@ const CustomListView = ({ data }) => {
       <ListGroup>
         {data.qandAS.map(({ _id, content }) => {
           return (
-            <ListGroup.Item key={_id} variant="dark" style={{ height: 100 }}>
-              {content.title}
+            <ListGroup.Item
+              key={_id}
+              className="d-flex justify-content-between align-items-start"
+              variant="dark"
+              style={{ height: 100 }}
+            >
+              <div className="ms-2 me-auto">
+                <Link href={`/question/${_id}`}>
+                  <a className="fw-bold">{content.title}</a>
+                </Link>
+                <div>{content.description}</div>
+              </div>
             </ListGroup.Item>
           );
         })}

@@ -17,13 +17,18 @@ const Home = ({ data }) => {
 export async function getServerSideProps() {
   const { data } = await client.query({
     query: gql`
-      query {
-        qandAS {
+      query qandAS(
+        $query: QandAQueryInput
+        $limit: Int
+        $sortBy: QandASortByInput
+      ) {
+        qandAS(query: $query, limit: $limit, sortBy: $sortBy) {
           _id
           content {
-            title
             description
+            title
           }
+          time_posted
         }
       }
     `,
