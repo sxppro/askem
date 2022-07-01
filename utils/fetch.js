@@ -23,18 +23,15 @@ const headers = {
 const query = {
   operationName: '',
   query: `query {
-    questions {
+    qandAS {
       _id
-      content
+      content {
+        title
+        description
+      }
     }
   }`,
   variables: {},
-};
-
-const options = {
-  method: 'POST',
-  headers: headers,
-  body: JSON.stringify(query),
 };
 
 (async function fetchData() {
