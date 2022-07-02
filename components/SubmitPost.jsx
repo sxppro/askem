@@ -14,6 +14,7 @@ const SubmitPost = () => {
         variant="primary"
         onClick={handleShow}
         style={{ float: 'right', margin: 'auto' }}
+        className="mt-3"
       >
         New Question
       </Button>
