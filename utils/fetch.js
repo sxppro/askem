@@ -4,15 +4,14 @@ import axios from 'axios';
 
 // Realm setup
 const app = new Realm.App({
-  id: process.env.APP_ID,
+  id: process.env.NEXT_PUBLIC_APP_ID,
 });
 const credentials = Realm.Credentials.anonymous();
 const user = await app.logIn(credentials);
 console.assert(user.id === app.currentUser.id);
 
 // Endpoint setup
-const endpoint =
-  'https://ap-southeast-2.aws.realm.mongodb.com/api/client/v2.0/app/qa-mwchg/graphql';
+const endpoint = process.env.NEXT_PUBLIC_API_URL;
 const token = user.accessToken;
 
 const headers = {

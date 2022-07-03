@@ -80,7 +80,7 @@ const PostForm = ({ handleClose }) => {
   return (
     <VStack as="form" onSubmit={handleSubmit} id="post-form" spacing={4}>
       {/* Post title */}
-      <FormControl>
+      <FormControl isRequired>
         <FormLabel htmlFor="post-title">Title</FormLabel>
         <Input
           onChange={updateTitle}
@@ -92,8 +92,14 @@ const PostForm = ({ handleClose }) => {
       </FormControl>
       {/* Post description */}
       <FormControl>
-        <FormLabel>Description</FormLabel>
-        <Textarea onChange={updateDesc} rows={4}></Textarea>
+        <FormLabel htmlFor="post-description" optionalIndicator>
+          Description
+        </FormLabel>
+        <Textarea
+          onChange={updateDesc}
+          id="post-description"
+          rows={4}
+        ></Textarea>
       </FormControl>
     </VStack>
   );
