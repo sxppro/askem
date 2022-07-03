@@ -18,7 +18,7 @@ import {
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import SubmitPost from '../SubmitPost';
 
-const Links = ['Dashboard', 'Projects', 'Team'];
+const Links = ['Home', 'Projects', 'Team'];
 
 const NavLink = ({ children }) => (
   <Link
@@ -29,7 +29,7 @@ const NavLink = ({ children }) => (
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
-    href={'#'}
+    href={'/'}
   >
     {children}
   </Link>

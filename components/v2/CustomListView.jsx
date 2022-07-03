@@ -10,7 +10,7 @@ import {
 
 const ListItem = ({ _id, content: { title, description } }) => {
   return (
-    <Box key={_id}>
+    <Box key={_id} py={1}>
       <NextLink passHref href={`/question/${_id}`}>
         <Link
           style={{ textDecoration: 'none' }}
@@ -18,7 +18,7 @@ const ListItem = ({ _id, content: { title, description } }) => {
             color: 'purple.200',
           }}
         >
-          <Heading size="md" py={2}>
+          <Heading size="md" pb={description ? 2 : 0}>
             {title ? title : ''}
           </Heading>
         </Link>
