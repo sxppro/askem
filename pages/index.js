@@ -1,17 +1,21 @@
 import { gql } from '@apollo/client';
-import Container from 'react-bootstrap/Container';
-import CustomNavbar from '../components/CustomNavbar';
-import CustomListView from '../components/CustomListView';
+import { Container } from '@chakra-ui/react';
+import CustomNavbar from '../components/v2/CustomNavbar';
+import CustomListView from '../components/v2/CustomListView';
 import SubmitPost from '../components/SubmitPost';
 import client from '../utils/graphql';
 
 const Home = ({ data }) => {
   return (
     <>
-      <CustomNavbar></CustomNavbar>
-      <Container className="mt-3">
+      <CustomNavbar />
+      <Container
+        mt={4}
+        maxW="container.xl"
+        borderRadius="lg"
+        borderColor="gray.200"
+      >
         <CustomListView data={data} />
-        <SubmitPost />
       </Container>
     </>
   );

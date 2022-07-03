@@ -1,42 +1,54 @@
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  ModalCloseButton,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 import PostForm from './PostForm';
 
 const SubmitPost = () => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
       <Button
-        variant="primary"
-        onClick={handleShow}
-        style={{ float: 'right', margin: 'auto' }}
-        className="mt-3"
+        onClick={onOpen}
+        leftIcon={<AddIcon />}
+        size="sm"
+        colorScheme="purple"
+        mr={4}
       >
-        New Question
+        Question
       </Button>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Submit a New Question</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <PostForm handleClose={handleClose} />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" type="submit" form="post-form">
-            Submit
-          </Button>
-        </Modal.Footer>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Submit a New Question</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>Testing</ModalBody>
+          <ModalFooter>
+            <Button variant="secondary" onClick={onClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit" form="post-form">
+              Submit
+            </Button>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </>
   );
 };
+
+// TODO: Add blurry background
+// background-color: rgba(16, 17, 17, 0.2);
+// backdrop-filter: blur(8px);
 
 export default SubmitPost;
