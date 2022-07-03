@@ -22,22 +22,25 @@ const SubmitPost = () => {
         leftIcon={<AddIcon />}
         size="sm"
         colorScheme="purple"
+        boxShadow="base"
         mr={4}
       >
         Question
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Submit a New Question</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>Testing</ModalBody>
+          <ModalBody>
+            <PostForm handleClose={onClose} />
+          </ModalBody>
           <ModalFooter>
-            <Button variant="secondary" onClick={onClose}>
+            <Button onClick={onClose} mr={4}>
               Close
             </Button>
-            <Button variant="primary" type="submit" form="post-form">
+            <Button type="submit" form="post-form" colorScheme="purple">
               Submit
             </Button>
           </ModalFooter>

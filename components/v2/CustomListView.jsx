@@ -1,12 +1,26 @@
 import NextLink from 'next/link';
-import { VStack, StackDivider, Box, Link, Text } from '@chakra-ui/react';
+import {
+  VStack,
+  StackDivider,
+  Box,
+  Link,
+  Text,
+  Heading,
+} from '@chakra-ui/react';
 
 const ListItem = ({ _id, content: { title, description } }) => {
   return (
     <Box key={_id}>
-      <NextLink href={`/question/${_id}`}>
-        <Link fontWeight="bold" textDecor="none">
-          {title ? title : ''}
+      <NextLink passHref href={`/question/${_id}`}>
+        <Link
+          style={{ textDecoration: 'none' }}
+          _hover={{
+            color: 'purple.200',
+          }}
+        >
+          <Heading size="md" py={2}>
+            {title ? title : ''}
+          </Heading>
         </Link>
       </NextLink>
       <Text>{description ? description : ''}</Text>

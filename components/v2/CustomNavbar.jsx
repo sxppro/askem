@@ -39,7 +39,7 @@ const CustomNavbar = ({ displayAction }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} pos="sticky">
+    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} boxShadow="base">
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
         <IconButton
           size={'md'}
@@ -65,6 +65,7 @@ const CustomNavbar = ({ displayAction }) => {
               variant={'link'}
               cursor={'pointer'}
               minW={0}
+              boxShadow="base"
             >
               <Avatar
                 size={'sm'}

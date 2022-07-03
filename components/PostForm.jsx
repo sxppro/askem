@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import Router from 'next/router';
-import Form from 'react-bootstrap/Form';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  VStack,
+} from '@chakra-ui/react';
 import { gql, useMutation } from '@apollo/client';
 
 const ADD_POST = gql`
@@ -71,27 +78,24 @@ const PostForm = ({ handleClose }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} id="post-form">
+    <VStack as="form" onSubmit={handleSubmit} id="post-form" spacing={4}>
       {/* Post title */}
-      <Form.Group className="mb-3">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
+      <FormControl>
+        <FormLabel htmlFor="post-title">Title</FormLabel>
+        <Input
           onChange={updateTitle}
-          size="lg"
+          id="post-title"
           type="text"
+          size="lg"
           placeholder="What do you want to ask?"
-        ></Form.Control>
-      </Form.Group>
+        />
+      </FormControl>
       {/* Post description */}
-      <Form.Group className="mb-3">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          onChange={updateDesc}
-          as="textarea"
-          rows={3}
-        ></Form.Control>
-      </Form.Group>
-    </Form>
+      <FormControl>
+        <FormLabel>Description</FormLabel>
+        <Textarea onChange={updateDesc} rows={4}></Textarea>
+      </FormControl>
+    </VStack>
   );
 };
 
