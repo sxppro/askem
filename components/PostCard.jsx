@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Router from 'next/router';
-import { Card, Form, Button } from 'react-bootstrap';
-import Loading from './Loading';
+import { Box, Text, Heading, Divider } from '@chakra-ui/react';
+import AnswerForm from './AnswerForm';
 
 const ADD_ANSWER = gql`
   mutation insertOneAnswer($data: AnswerInsertInput!) {
@@ -79,56 +79,37 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <>
-      <Card
-        className="questionPost"
-        style={{ marginTop: '40px', marginLeft: '20px', marginRight: '20px' }}
-      >
-        <Card.Body>
-          {
-            // TODO: Add users to questions/posts
-            /* <Card.Text className="questionName">John Do</Card.Text> */
-          }
-          <Card.Text
-            className="timestamp"
-            style={{ fontWeight: 'bold', marginBottom: '5px' }}
-          >
-            {time_posted && date
-              ? `${
-                  MONTH_NAMES[date.getMonth()]
-                } ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString()}`
-              : ''}
-          </Card.Text>
-          <Card.Title className="title fs-1 mb-3" style={{ marginTop: '20px' }}>
-            {content && content.title ? content.title : ''}
-          </Card.Title>
-          <Card.Text className="fs-5 mb-5">
-            {content && content.description ? content.description : ''}
-          </Card.Text>
-          <Form onSubmit={handleSubmit} id="answer-form">
-            <Form.Control
-              onChange={updateComment}
-              as="textarea"
-              placeholder="Answer this question ..."
-              className="postComment fs-5"
-              id="text"
-              style={{ height: '150px' }}
-            />
-          </Form>
-        </Card.Body>
-      </Card>
-      <Button
-        disabled={loading}
-        variant="primary"
-        type="submit"
-        form="answer-form"
-        className="postButton mt-2"
-        style={{ float: 'right', marginRight: '20px' }}
-      >
-        {loading ? <Loading /> : ''}
-        {loading ? ' Submitting ...' : 'Comment'}
-      </Button>
-    </>
+    <Box
+      className="post-container"
+      borderWidth="1px"
+      borderRadius="lg"
+      p={8}
+      m={4}
+    >
+      {
+        // TODO: Add users to questions/posts
+        /* <Card.Text className="questionName">John Do</Card.Text> */
+      }
+      <Text className="post-timestamp" fontWeight="bold" fontSize="sm">
+        {time_posted && date
+          ? `${
+              MONTH_NAMES[date.getMonth()]
+            } ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString()}`
+          : ''}
+      </Text>
+      <Heading className="post-title" mt={2}>
+        {content && content.title ? content.title : ''}
+      </Heading>
+      <Text className="post-description" mt={4}>
+        {content && content.description ? content.description : ''}
+      </Text>
+      <Divider alignItems="center" my={6} />
+      <AnswerForm
+        handleSubmit={handleSubmit}
+        updateComment={updateComment}
+        loading={loading}
+      />
+    </Box>
   );
 };
 

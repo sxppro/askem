@@ -7,17 +7,14 @@ import client from '../utils/graphql';
 
 const Home = ({ data }) => {
   return (
-    <>
-      <CustomNavbar />
-      <Container
-        mt={4}
-        maxW="container.xl"
-        borderRadius="lg"
-        borderColor="gray.200"
-      >
-        <CustomListView data={data} />
-      </Container>
-    </>
+    <Container
+      mt={4}
+      maxW="container.xl"
+      borderRadius="lg"
+      borderColor="gray.200"
+    >
+      <CustomListView data={data} />
+    </Container>
   );
 };
 
