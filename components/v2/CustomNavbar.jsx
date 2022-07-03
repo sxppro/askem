@@ -49,7 +49,7 @@ const CustomNavbar = ({ displayAction }) => {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={'center'}>
-          <Box>Ask'em</Box>
+          <Box>Ask&apos;em</Box>
           <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
             {Links.map((link) => (
               <NavLink key={link}>{link}</NavLink>
