@@ -1,8 +1,6 @@
 import { gql } from '@apollo/client';
 import { Container } from '@chakra-ui/react';
-import CustomNavbar from '../components/v2/CustomNavbar';
 import CustomListView from '../components/v2/CustomListView';
-import SubmitPost from '../components/SubmitPost';
 import client from '../utils/graphql';
 
 const Home = ({ data }) => {

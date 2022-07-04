@@ -14,8 +14,10 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
+  Text,
+  useColorMode,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import SubmitPost from '../SubmitPost';
 
 const Links = ['Home', 'Projects', 'Team'];
@@ -37,6 +39,8 @@ const NavLink = ({ children }) => (
 
 const CustomNavbar = ({ displayAction }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
+  const isDark = colorMode === 'dark';
 
   return (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} boxShadow="base">
@@ -49,7 +53,23 @@ const CustomNavbar = ({ displayAction }) => {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={'center'}>
-          <Box>Ask&apos;em</Box>
+          <Box>
+            <Link
+              href="/"
+              _hover={{ textDecoration: 'none' }}
+              fontWeight="bold"
+              fontSize="2xl"
+              px={2}
+              py={2}
+              bgGradient={useColorModeValue(
+                'linear(to-r, #c471ed, #f64f59)',
+                'linear(to-r, #CF8BF3, #FDB99B)'
+              )}
+              bgClip="text"
+            >
+              Ask&apos;em
+            </Link>
+          </Box>
           <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
             {Links.map((link) => (
               <NavLink key={link}>{link}</NavLink>
@@ -57,6 +77,12 @@ const CustomNavbar = ({ displayAction }) => {
           </HStack>
         </HStack>
         <Flex alignItems={'center'}>
+          <IconButton
+            onClick={toggleColorMode}
+            icon={isDark ? <SunIcon /> : <MoonIcon />}
+            mr={4}
+            size="sm"
+          />
           <SubmitPost />
           <Menu>
             <MenuButton
@@ -75,9 +101,9 @@ const CustomNavbar = ({ displayAction }) => {
               />
             </MenuButton>
             <MenuList>
-              <MenuItem>Profile</MenuItem>
+              <MenuItem>Profile (WIP)</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign Out</MenuItem>
+              <MenuItem>Sign Out (WIP)</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
