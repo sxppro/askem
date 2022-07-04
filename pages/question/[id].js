@@ -14,7 +14,7 @@ const Post = ({ data, answers }) => {
         <Heading size="2xl" p={4}>
           Comments
         </Heading>
-        <VStack spacing={4}>
+        <VStack alignItems={'flex-start'} align="stretch" spacing={4}>
           {answers &&
             answers.map(({ _id, content }) => {
               return <Answer key={_id} answer={content} />;

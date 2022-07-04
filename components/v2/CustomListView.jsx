@@ -6,6 +6,7 @@ import {
   Link,
   Text,
   Heading,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 const ListItem = ({ _id, content: { title, description } }) => {
@@ -15,7 +16,7 @@ const ListItem = ({ _id, content: { title, description } }) => {
         <Link
           style={{ textDecoration: 'none' }}
           _hover={{
-            color: 'purple.200',
+            color: useColorModeValue('purple.600', 'purple.200'),
           }}
         >
           <Heading size="md" pb={description ? 2 : 0}>

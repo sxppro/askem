@@ -2,7 +2,7 @@ import { Box, Container, Text } from '@chakra-ui/react';
 
 const Answer = ({ answer }) => {
   return (
-    <Container borderWidth="1px" borderRadius="lg" p={8}>
+    <Container borderWidth="1px" borderRadius="lg" maxW="container.xl" p={4}>
       {/* 
           // TODO: Add timestamps to answers
            */}
