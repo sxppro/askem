@@ -1,21 +1,14 @@
-import Card from 'react-bootstrap/Card';
+import { Box, Container, Text } from '@chakra-ui/react';
 
 const Answer = ({ answer }) => {
   return (
-    <>
-      <Card
-        className="answer"
-        style={{ maxWidth: '1280px', minWidth: '50%', margin: 'auto' }}
-      >
-        <Card.Body>
-          {/* 
+    <Container borderWidth="1px" borderRadius="lg" maxW="container.xl" p={4}>
+      {/* 
           // TODO: Add timestamps to answers
            */}
-          {/* <Card.Text className="answer-timestamp"></Card.Text> */}
-          <Card.Text className="answer-content fs-5 mb-5">{answer}</Card.Text>
-        </Card.Body>
-      </Card>
-    </>
+      {/* <Text></Text> */}
+      <Text fontSize="lg">{answer}</Text>
+    </Container>
   );
 };
 

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import Router from 'next/router';
-import { Card, Form, Button } from 'react-bootstrap';
-import Loading from './Loading';
+import { useRouter } from 'next/router';
+import { Box, Text, Heading, Divider, useToast } from '@chakra-ui/react';
+import AnswerForm from './AnswerForm';
 
 const ADD_ANSWER = gql`
   mutation insertOneAnswer($data: AnswerInsertInput!) {
@@ -50,10 +50,22 @@ const MONTH_NAMES = [
 
 const PostCard = ({ post }) => {
   const { _id, content, time_posted } = post;
-  const [addAnswer, { loading, error: newAnswerError }] =
-    useMutation(ADD_ANSWER);
+  const [addAnswer, { loading, error }] = useMutation(ADD_ANSWER);
   const [comment, setComment] = useState('');
   const date = new Date(time_posted);
+  const router = useRouter();
+  const toast = useToast();
+
+  const refreshData = () => router.replace(router.asPath);
+
+  // Show toast
+  const showToast = ({ title, status }) =>
+    toast({
+      title: title,
+      status: status,
+      duration: 5000,
+      isClosable: true,
+    });
 
   // Sets comment
   const updateComment = ({ target: { value } }) => {
@@ -71,64 +83,56 @@ const PostCard = ({ post }) => {
         },
       },
     });
-    if (newAnswerError) {
-      console.log(`Submission error: ${newAnswerError.message}`);
+    if (error) {
+      console.log(`Submission error: ${error.message}`);
+      showToast({
+        title: 'Unable to submit comment',
+        status: 'error',
+      });
       return;
     }
-    Router.reload();
+    // Clear input
+    setComment('');
+    showToast({
+      title: 'Comment submitted',
+      status: 'success',
+    });
+    refreshData();
   };
 
   return (
-    <>
-      <Card
-        className="questionPost"
-        style={{ marginTop: '40px', marginLeft: '20px', marginRight: '20px' }}
-      >
-        <Card.Body>
-          {
-            // TODO: Add users to questions/posts
-            /* <Card.Text className="questionName">John Do</Card.Text> */
-          }
-          <Card.Text
-            className="timestamp"
-            style={{ fontWeight: 'bold', marginBottom: '5px' }}
-          >
-            {time_posted && date
-              ? `${
-                  MONTH_NAMES[date.getMonth()]
-                } ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString()}`
-              : ''}
-          </Card.Text>
-          <Card.Title className="title fs-1 mb-3" style={{ marginTop: '20px' }}>
-            {content && content.title ? content.title : ''}
-          </Card.Title>
-          <Card.Text className="fs-5 mb-5">
-            {content && content.description ? content.description : ''}
-          </Card.Text>
-          <Form onSubmit={handleSubmit} id="answer-form">
-            <Form.Control
-              onChange={updateComment}
-              as="textarea"
-              placeholder="Answer this question ..."
-              className="postComment fs-5"
-              id="text"
-              style={{ height: '150px' }}
-            />
-          </Form>
-        </Card.Body>
-      </Card>
-      <Button
-        disabled={loading}
-        variant="primary"
-        type="submit"
-        form="answer-form"
-        className="postButton mt-2"
-        style={{ float: 'right', marginRight: '20px' }}
-      >
-        {loading ? <Loading /> : ''}
-        {loading ? ' Submitting ...' : 'Comment'}
-      </Button>
-    </>
+    <Box
+      className="post-container"
+      borderWidth="1px"
+      borderRadius="lg"
+      p={8}
+      my={4}
+    >
+      {
+        // TODO: Add users to questions/posts
+        /* <Card.Text className="questionName">John Do</Card.Text> */
+      }
+      <Text className="post-timestamp" fontWeight="bold" fontSize="sm">
+        {time_posted && date
+          ? `${
+              MONTH_NAMES[date.getMonth()]
+            } ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString()}`
+          : ''}
+      </Text>
+      <Heading className="post-title" mt={2}>
+        {content && content.title ? content.title : ''}
+      </Heading>
+      <Text className="post-description" mt={4}>
+        {content && content.description ? content.description : ''}
+      </Text>
+      <Divider alignItems="center" my={6} />
+      <AnswerForm
+        handleSubmit={handleSubmit}
+        updateComment={updateComment}
+        loading={loading}
+        comment={comment}
+      />
+    </Box>
   );
 };
 

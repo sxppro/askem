@@ -1,8 +1,6 @@
 import { gql } from '@apollo/client';
-import Container from 'react-bootstrap/Container';
-import Stack from 'react-bootstrap/Stack';
+import { VStack, Container, Heading } from '@chakra-ui/react';
 import client from '../../utils/graphql';
-import CustomNavbar from '../../components/CustomNavbar';
 import PostCard from '../../components/PostCard';
 import Answer from '../../components/Answer';
 
@@ -10,20 +8,20 @@ const Post = ({ data, answers }) => {
   const post = data && data.qandA ? data.qandA : null;
 
   return (
-    <>
-      <CustomNavbar />
-      <Stack>
-        <Container>
-          <PostCard post={post} />
-        </Container>
-        <Stack gap={4}>
+    <VStack>
+      <Container maxW="container.xl">
+        <PostCard post={post} />
+        <Heading size="2xl" p={4}>
+          Comments
+        </Heading>
+        <VStack alignItems={'flex-start'} align="stretch" spacing={4}>
           {answers &&
             answers.map(({ _id, content }) => {
               return <Answer key={_id} answer={content} />;
             })}
-        </Stack>
-      </Stack>
-    </>
+        </VStack>
+      </Container>
+    </VStack>
   );
 };
 

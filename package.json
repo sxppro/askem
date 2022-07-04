@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,14 @@
   "homepage": "https://github.com/soumya-sasidharan/Q-A-app#readme",
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@chakra-ui/icons": "^2.0.2",
+    "@chakra-ui/react": "^2.2.1",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "axios": "^0.27.2",
     "bootstrap": "^5.1.3",
     "dotenv": "^16.0.1",
+    "framer-motion": "^6.3.16",
     "graphql": "^16.5.0",
     "next": "^12.2.0",
     "react": "^18.2.0",

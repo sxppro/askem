@@ -1,6 +1,14 @@
 import { useState } from 'react';
-import Router from 'next/router';
-import Form from 'react-bootstrap/Form';
+import { useRouter } from 'next/router';
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  VStack,
+  useToast,
+} from '@chakra-ui/react';
 import { gql, useMutation } from '@apollo/client';
 
 const ADD_POST = gql`
@@ -40,6 +48,18 @@ const PostForm = ({ handleClose }) => {
   });
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
+  const router = useRouter();
+  const toast = useToast();
+
+  const refreshData = () => router.replace(router.asPath);
+
+  const showToast = ({ title, status }) =>
+    toast({
+      title: title,
+      status: status,
+      duration: 5000,
+      isClosable: true,
+    });
 
   // Retrieves title
   const updateTitle = ({ target: { value } }) => {
@@ -65,33 +85,53 @@ const PostForm = ({ handleClose }) => {
         },
       },
     });
+    if (error) {
+      console.log(`Submission error: ${error.message}`);
+      showToast({
+        title: 'Unable to submit question',
+        status: 'error',
+      });
+      return;
+    }
     // Close modal
     handleClose();
-    Router.reload();
+    // Clear inputs
+    setTitle('');
+    setDesc('');
+    showToast({
+      title: 'Question submitted',
+      status: 'success',
+    });
+    refreshData();
   };
 
   return (
-    <Form onSubmit={handleSubmit} id="post-form">
+    <VStack as="form" onSubmit={handleSubmit} id="post-form" spacing={4}>
       {/* Post title */}
-      <Form.Group className="mb-3">
-        <Form.Label>Title</Form.Label>
-        <Form.Control
+      <FormControl isRequired>
+        <FormLabel htmlFor="post-title">Title</FormLabel>
+        <Input
+          value={title}
           onChange={updateTitle}
-          size="lg"
+          id="post-title"
           type="text"
+          size="lg"
           placeholder="What do you want to ask?"
-        ></Form.Control>
-      </Form.Group>
+        />
+      </FormControl>
       {/* Post description */}
-      <Form.Group className="mb-3">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
+      <FormControl>
+        <FormLabel htmlFor="post-description" optionalIndicator>
+          Description
+        </FormLabel>
+        <Textarea
+          value={desc}
           onChange={updateDesc}
-          as="textarea"
-          rows={3}
-        ></Form.Control>
-      </Form.Group>
-    </Form>
+          id="post-description"
+          rows={4}
+        ></Textarea>
+      </FormControl>
+    </VStack>
   );
 };
 
