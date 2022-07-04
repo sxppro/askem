@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { Box, Text, Heading, Divider } from '@chakra-ui/react';
 import AnswerForm from './AnswerForm';
 
@@ -54,6 +54,9 @@ const PostCard = ({ post }) => {
     useMutation(ADD_ANSWER);
   const [comment, setComment] = useState('');
   const date = new Date(time_posted);
+  const router = useRouter();
+
+  const refreshData = () => router.replace(router.asPath);
 
   // Sets comment
   const updateComment = ({ target: { value } }) => {
@@ -75,7 +78,9 @@ const PostCard = ({ post }) => {
       console.log(`Submission error: ${newAnswerError.message}`);
       return;
     }
-    Router.reload();
+    // Clear input
+    setComment('');
+    refreshData();
   };
 
   return (
@@ -108,6 +113,7 @@ const PostCard = ({ post }) => {
         handleSubmit={handleSubmit}
         updateComment={updateComment}
         loading={loading}
+        comment={comment}
       />
     </Box>
   );

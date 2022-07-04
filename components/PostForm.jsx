@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import {
   Box,
   FormControl,
@@ -47,6 +47,9 @@ const PostForm = ({ handleClose }) => {
   });
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
+  const router = useRouter();
+
+  const refreshData = () => router.replace(router.asPath);
 
   // Retrieves title
   const updateTitle = ({ target: { value } }) => {
@@ -74,7 +77,10 @@ const PostForm = ({ handleClose }) => {
     });
     // Close modal
     handleClose();
-    Router.reload();
+    // Clear inputs
+    setTitle('');
+    setDesc('');
+    refreshData();
   };
 
   return (
@@ -83,6 +89,7 @@ const PostForm = ({ handleClose }) => {
       <FormControl isRequired>
         <FormLabel htmlFor="post-title">Title</FormLabel>
         <Input
+          value={title}
           onChange={updateTitle}
           id="post-title"
           type="text"
@@ -96,6 +103,7 @@ const PostForm = ({ handleClose }) => {
           Description
         </FormLabel>
         <Textarea
+          value={desc}
           onChange={updateDesc}
           id="post-description"
           rows={4}

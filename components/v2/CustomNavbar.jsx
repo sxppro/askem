@@ -62,7 +62,7 @@ const CustomNavbar = ({ displayAction }) => {
               px={2}
               py={2}
               bgGradient={useColorModeValue(
-                'linear(to-r, #c471ed, #f64f59)',
+                'linear(to-r, #C471ED, #F64F59)',
                 'linear(to-r, #CF8BF3, #FDB99B)'
               )}
               bgClip="text"
