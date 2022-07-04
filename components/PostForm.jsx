@@ -7,6 +7,7 @@ import {
   Input,
   Textarea,
   VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { gql, useMutation } from '@apollo/client';
 
@@ -48,8 +49,17 @@ const PostForm = ({ handleClose }) => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const router = useRouter();
+  const toast = useToast();
 
   const refreshData = () => router.replace(router.asPath);
+
+  const showToast = ({ title, status }) =>
+    toast({
+      title: title,
+      status: status,
+      duration: 5000,
+      isClosable: true,
+    });
 
   // Retrieves title
   const updateTitle = ({ target: { value } }) => {
@@ -75,11 +85,23 @@ const PostForm = ({ handleClose }) => {
         },
       },
     });
+    if (error) {
+      console.log(`Submission error: ${error.message}`);
+      showToast({
+        title: 'Unable to submit question',
+        status: 'error',
+      });
+      return;
+    }
     // Close modal
     handleClose();
     // Clear inputs
     setTitle('');
     setDesc('');
+    showToast({
+      title: 'Question submitted',
+      status: 'success',
+    });
     refreshData();
   };
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
-import { Box, Text, Heading, Divider } from '@chakra-ui/react';
+import { Box, Text, Heading, Divider, useToast } from '@chakra-ui/react';
 import AnswerForm from './AnswerForm';
 
 const ADD_ANSWER = gql`
@@ -50,13 +50,22 @@ const MONTH_NAMES = [
 
 const PostCard = ({ post }) => {
   const { _id, content, time_posted } = post;
-  const [addAnswer, { loading, error: newAnswerError }] =
-    useMutation(ADD_ANSWER);
+  const [addAnswer, { loading, error }] = useMutation(ADD_ANSWER);
   const [comment, setComment] = useState('');
   const date = new Date(time_posted);
   const router = useRouter();
+  const toast = useToast();
 
   const refreshData = () => router.replace(router.asPath);
+
+  // Show toast
+  const showToast = ({ title, status }) =>
+    toast({
+      title: title,
+      status: status,
+      duration: 5000,
+      isClosable: true,
+    });
 
   // Sets comment
   const updateComment = ({ target: { value } }) => {
@@ -74,12 +83,20 @@ const PostCard = ({ post }) => {
         },
       },
     });
-    if (newAnswerError) {
-      console.log(`Submission error: ${newAnswerError.message}`);
+    if (error) {
+      console.log(`Submission error: ${error.message}`);
+      showToast({
+        title: 'Unable to submit comment',
+        status: 'error',
+      });
       return;
     }
     // Clear input
     setComment('');
+    showToast({
+      title: 'Comment submitted',
+      status: 'success',
+    });
     refreshData();
   };
 

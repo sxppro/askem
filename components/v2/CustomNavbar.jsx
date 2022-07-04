@@ -14,7 +14,6 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
-  Text,
   useColorMode,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
