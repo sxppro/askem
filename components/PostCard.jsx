@@ -84,7 +84,7 @@ const PostCard = ({ post }) => {
       borderWidth="1px"
       borderRadius="lg"
       p={8}
-      m={4}
+      my={4}
     >
       {
         // TODO: Add users to questions/posts
