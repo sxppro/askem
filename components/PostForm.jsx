@@ -9,41 +9,11 @@ import {
   VStack,
   useToast,
 } from '@chakra-ui/react';
-import { gql, useMutation } from '@apollo/client';
-
-const ADD_POST = gql`
-  mutation insertOneQandA($data: QandAInsertInput!) {
-    insertOneQandA(data: $data) {
-      _id
-      content {
-        description
-        title
-      }
-      latest_time_updated
-      time_posted
-    }
-  }
-`;
-
-const GET_POSTS = gql`
-  query qandAS(
-    $query: QandAQueryInput
-    $limit: Int
-    $sortBy: QandASortByInput
-  ) {
-    qandAS(query: $query, limit: $limit, sortBy: $sortBy) {
-      _id
-      content {
-        description
-        title
-      }
-      time_posted
-    }
-  }
-`;
+import { useMutation } from '@apollo/client';
+import { ADD_POST, GET_POSTS } from '../utils/graphql';
 
 const PostForm = ({ handleClose }) => {
-  const [addPost, { data, loading, error }] = useMutation(ADD_POST, {
+  const [addPost, { error }] = useMutation(ADD_POST, {
     refetchQueries: [{ query: GET_POSTS }],
   });
   const [title, setTitle] = useState('');

@@ -3,38 +3,7 @@ import { useRouter } from 'next/router';
 import { VStack, Container, Heading, Skeleton } from '@chakra-ui/react';
 import PostCard from '../../components/PostCard';
 import Answer from '../../components/Answer';
-
-const GET_QUESTION = gql`
-  query qandA($query: QandAQueryInput) {
-    qandA(query: $query) {
-      _id
-      content {
-        comments {
-          _id
-          content
-        }
-        description
-        title
-      }
-      latest_time_updated
-      time_posted
-    }
-  }
-`;
-
-const GET_ANSWERS = gql`
-  query answers(
-    $query: AnswerQueryInput
-    $limit: Int
-    $sortBy: AnswerSortByInput
-  ) {
-    answers(query: $query, limit: $limit, sortBy: $sortBy) {
-      _id
-      content
-      questionId
-    }
-  }
-`;
+import { GET_POST, GET_ANSWERS } from '../../utils/graphql';
 
 const Post = () => {
   const router = useRouter();
@@ -43,7 +12,7 @@ const Post = () => {
     data: questionData,
     loading: questionLoading,
     error: questionError,
-  } = useQuery(GET_QUESTION, {
+  } = useQuery(GET_POST, {
     variables: {
       query: { _id: id },
     },

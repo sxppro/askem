@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { useRouter } from 'next/router';
 import {
   Box,
   Text,
@@ -11,35 +10,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import AnswerForm from './AnswerForm';
-
-const ADD_ANSWER = gql`
-  mutation insertOneAnswer($data: AnswerInsertInput!) {
-    insertOneAnswer(data: $data) {
-      _id
-      content
-      questionId
-    }
-  }
-`;
-
-const UPDATE_POST = gql`
-  mutation updateOneQandA($query: QandAQueryInput, $set: QandAUpdateInput!) {
-    updateOneQandA(query: $query, set: $set) {
-      _id
-      content {
-        comments {
-          _id
-          content
-          questionId
-        }
-        description
-        title
-      }
-      latest_time_updated
-      time_posted
-    }
-  }
-`;
+import { ADD_ANSWER } from '../utils/graphql';
 
 const MONTH_NAMES = [
   'January',
@@ -62,17 +33,21 @@ const PostCard = ({ post, questionLoading, refetchAnswers }) => {
     useMutation(ADD_ANSWER);
   const [comment, setComment] = useState('');
   const date = new Date(time_posted);
-  const router = useRouter();
   const toast = useToast();
+  const invalidToast = 'invalid-comment-toast';
 
   // Show toast
-  const showToast = ({ title, status }) =>
-    toast({
-      title: title,
-      status: status,
-      duration: 5000,
-      isClosable: true,
-    });
+  const showToast = ({ title, status, id = undefined }) => {
+    if (!toast.isActive(id)) {
+      toast({
+        id,
+        title,
+        status,
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   // Sets comment
   const updateComment = ({ target: { value } }) => {
@@ -87,6 +62,7 @@ const PostCard = ({ post, questionLoading, refetchAnswers }) => {
       showToast({
         title: 'Invalid comment',
         status: 'error',
+        id: invalidToast,
       });
       return;
     }
