@@ -10,18 +10,17 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useMutation } from '@apollo/client';
-import { ADD_POST, GET_POSTS } from '../utils/graphql';
+import { ADD_POST } from '../utils/graphql';
 
 const PostForm = ({ handleClose }) => {
-  const [addPost, { error }] = useMutation(ADD_POST, {
-    refetchQueries: [{ query: GET_POSTS }],
+  const [addPost, { data, error }] = useMutation(ADD_POST, {
+    refetchQueries: ['qandAS'],
   });
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  const router = useRouter();
   const toast = useToast();
 
-  const refreshData = () => router.replace(router.asPath);
+  console.log(data);
 
   const showToast = ({ title, status }) =>
     toast({
@@ -72,7 +71,6 @@ const PostForm = ({ handleClose }) => {
       title: 'Question submitted',
       status: 'success',
     });
-    refreshData();
   };
 
   return (

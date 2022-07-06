@@ -45,7 +45,7 @@ const CustomListView = ({ posts, postsLoading }) => {
           align="normal"
         >
           {Array.from({ length: NUMBER_OF_SKELETONS }, (_, i) => (
-            <SkeletonText spacing={3}></SkeletonText>
+            <SkeletonText key={i} spacing={3}></SkeletonText>
           ))}
         </VStack>
       ) : (
