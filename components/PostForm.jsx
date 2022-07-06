@@ -20,8 +20,6 @@ const PostForm = ({ handleClose }) => {
   const [desc, setDesc] = useState('');
   const toast = useToast();
 
-  console.log(data);
-
   const showToast = ({ title, status }) =>
     toast({
       title: title,
