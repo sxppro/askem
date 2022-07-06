@@ -6,11 +6,17 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-const AnswerForm = ({ handleSubmit, updateComment, loading, comment }) => {
+const AnswerForm = ({
+  handleSubmit,
+  updateComment,
+  loading,
+  disabled,
+  comment,
+}) => {
   return (
     <Box borderRadius="lg">
       <Box as="form" onSubmit={handleSubmit} id="answer-form">
-        <FormControl onChange={updateComment}>
+        <FormControl>
           <FormLabel htmlFor="post-answer">Post an answer</FormLabel>
           <Textarea
             value={comment}
@@ -23,6 +29,7 @@ const AnswerForm = ({ handleSubmit, updateComment, loading, comment }) => {
       </Box>
       <Button
         isLoading={loading}
+        isDisabled={disabled}
         loadingText="Submitting ..."
         type="submit"
         form="answer-form"
