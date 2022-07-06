@@ -52,6 +52,7 @@ const Post = () => {
     data: answersData,
     loading: answersLoading,
     error: answersError,
+    refetch: answersRefetch,
   } = useQuery(GET_ANSWERS, {
     variables: {
       query: {
@@ -67,7 +68,11 @@ const Post = () => {
   return (
     <VStack>
       <Container maxW="container.xl">
-        <PostCard post={post} questionLoading={questionLoading} />
+        <PostCard
+          post={post}
+          questionLoading={questionLoading}
+          refetchAnswers={answersRefetch}
+        />
         <Heading size="2xl" p={4}>
           Comments
         </Heading>

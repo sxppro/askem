@@ -56,7 +56,7 @@ const MONTH_NAMES = [
   'December',
 ];
 
-const PostCard = ({ post, questionLoading }) => {
+const PostCard = ({ post, questionLoading, refetchAnswers }) => {
   const { _id, content, time_posted } = !questionLoading ? post : {};
   const [addAnswer, { loading: answerLoading, error: answerError }] =
     useMutation(ADD_ANSWER);
@@ -64,8 +64,6 @@ const PostCard = ({ post, questionLoading }) => {
   const date = new Date(time_posted);
   const router = useRouter();
   const toast = useToast();
-
-  const refreshData = () => router.replace(router.asPath);
 
   // Show toast
   const showToast = ({ title, status }) =>
@@ -114,7 +112,7 @@ const PostCard = ({ post, questionLoading }) => {
       title: 'Comment submitted',
       status: 'success',
     });
-    refreshData();
+    refetchAnswers();
   };
 
   return (
