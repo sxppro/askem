@@ -1,3 +1,4 @@
+import NextLink from 'next/link';
 import {
   Box,
   Flex,
@@ -19,21 +20,26 @@ import {
 import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from '@chakra-ui/icons';
 import SubmitPost from '../SubmitPost';
 
-const Links = ['Home', 'Projects', 'Team'];
+const Links = [
+  { text: 'Home', link: '/' },
+  { text: 'Projects', link: '/wip' },
+  { text: 'Team', link: '/wip' },
+];
 
-const NavLink = ({ children }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('gray.200', 'gray.700'),
-    }}
-    href={'/'}
-  >
-    {children}
-  </Link>
+const NavLink = ({ link, children }) => (
+  <NextLink href={link} passHref>
+    <Link
+      px={2}
+      py={1}
+      rounded={'md'}
+      _hover={{
+        textDecoration: 'none',
+        bg: useColorModeValue('gray.200', 'gray.700'),
+      }}
+    >
+      {children}
+    </Link>
+  </NextLink>
 );
 
 const CustomNavbar = ({ displayAction }) => {
@@ -53,25 +59,28 @@ const CustomNavbar = ({ displayAction }) => {
         />
         <HStack spacing={8} alignItems={'center'}>
           <Box>
-            <Link
-              href="/"
-              _hover={{ textDecoration: 'none' }}
-              fontWeight="bold"
-              fontSize="2xl"
-              px={2}
-              py={2}
-              bgGradient={useColorModeValue(
-                'linear(to-r, #C471ED, #F64F59)',
-                'linear(to-r, #CF8BF3, #FDB99B)'
-              )}
-              bgClip="text"
-            >
-              Ask&apos;em
-            </Link>
+            <NextLink href={'/'} passHref>
+              <Link
+                _hover={{ textDecoration: 'none' }}
+                fontWeight="bold"
+                fontSize="2xl"
+                px={2}
+                py={2}
+                bgGradient={useColorModeValue(
+                  'linear(to-r, #C471ED, #F64F59)',
+                  'linear(to-r, #CF8BF3, #FDB99B)'
+                )}
+                bgClip="text"
+              >
+                Ask&apos;em
+              </Link>
+            </NextLink>
           </Box>
           <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+            {Links.map(({ text, link }) => (
+              <NavLink key={text} link={link}>
+                {text}
+              </NavLink>
             ))}
           </HStack>
         </HStack>
