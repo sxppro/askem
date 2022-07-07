@@ -31,8 +31,8 @@ const Post = () => {
   });
 
   // Question data
-  const post = questionData && questionData.qandA ? questionData.qandA : null;
-  const answers = answersData && answersData.answers;
+  const post = questionData?.qandA;
+  const answers = answersData?.answers;
 
   return (
     <Container maxW="container.xl">
