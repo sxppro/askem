@@ -7,6 +7,7 @@ import {
   Divider,
   Skeleton,
   SkeletonText,
+  VStack,
   useToast,
 } from '@chakra-ui/react';
 import AnswerForm from './AnswerForm';
@@ -103,7 +104,10 @@ const PostCard = ({ post, questionLoading, refetchAnswers }) => {
         // TODO: Add users to questions/posts
         /* <Card.Text className="questionName">John Do</Card.Text> */
       }
-      <Skeleton isLoaded={!questionLoading} h="0.875rem">
+      <Skeleton
+        isLoaded={!questionLoading}
+        h={questionLoading ? '0.875rem' : 'auto'}
+      >
         <Text className="post-timestamp" fontWeight="bold" fontSize="sm">
           {time_posted && date
             ? `${
@@ -112,7 +116,11 @@ const PostCard = ({ post, questionLoading, refetchAnswers }) => {
             : ''}
         </Text>
       </Skeleton>
-      <Skeleton isLoaded={!questionLoading} mt={6} h="2.25rem">
+      <Skeleton
+        isLoaded={!questionLoading}
+        mt={questionLoading ? 6 : 0}
+        h={questionLoading ? '2.25rem' : 'auto'}
+      >
         <Heading className="post-title" mt={2}>
           {content && content.title ? content.title : ''}
         </Heading>
@@ -120,7 +128,7 @@ const PostCard = ({ post, questionLoading, refetchAnswers }) => {
       <SkeletonText
         isLoaded={!questionLoading}
         noOfLines={2}
-        mt={8}
+        mt={questionLoading ? 8 : 0}
         spacing={4}
       >
         <Text className="post-description" mt={4}>

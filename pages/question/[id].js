@@ -35,27 +35,25 @@ const Post = () => {
   const answers = answersData && answersData.answers;
 
   return (
-    <VStack>
-      <Container maxW="container.xl">
-        <PostCard
-          post={post}
-          questionLoading={questionLoading}
-          refetchAnswers={answersRefetch}
-        />
-        <Heading size="2xl" p={4}>
-          Comments
-        </Heading>
-        <Skeleton isLoaded={!answersLoading}>
-          <VStack alignItems={'flex-start'} align="stretch" spacing={4}>
-            {!answersLoading &&
-              answers &&
-              answers.map(({ _id, content }) => {
-                return <Answer key={_id} answer={content} />;
-              })}
-          </VStack>
-        </Skeleton>
-      </Container>
-    </VStack>
+    <Container maxW="container.xl">
+      <PostCard
+        post={post}
+        questionLoading={questionLoading}
+        refetchAnswers={answersRefetch}
+      />
+      <Heading size="2xl" p={4}>
+        Comments
+      </Heading>
+      <Skeleton isLoaded={!answersLoading}>
+        <VStack alignItems={'flex-start'} align="stretch" spacing={4}>
+          {!answersLoading &&
+            answers &&
+            answers.map(({ _id, content }) => {
+              return <Answer key={_id} answer={content} />;
+            })}
+        </VStack>
+      </Skeleton>
+    </Container>
   );
 };
 

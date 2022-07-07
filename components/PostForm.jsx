@@ -13,7 +13,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_POST } from '../utils/graphql';
 
 const PostForm = ({ handleClose }) => {
-  const [addPost, { data, error }] = useMutation(ADD_POST, {
+  const [addPost, { error }] = useMutation(ADD_POST, {
     refetchQueries: ['qandAS'],
   });
   const [title, setTitle] = useState('');
