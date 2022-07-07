@@ -120,8 +120,10 @@ const CustomNavbar = ({ displayAction }) => {
       {isOpen ? (
         <Box pb={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4}>
-            {Links.map((link) => (
-              <NavLink key={link}>{link}</NavLink>
+            {Links.map(({ text, link }) => (
+              <NavLink key={text} link={link}>
+                {text}
+              </NavLink>
             ))}
           </Stack>
         </Box>
