@@ -7,7 +7,11 @@ import {
   Text,
   Heading,
   useColorModeValue,
+  Skeleton,
+  SkeletonText,
 } from '@chakra-ui/react';
+
+const NUMBER_OF_SKELETONS = 8;
 
 const ListItem = ({ _id, content: { title, description } }) => {
   return (
@@ -29,19 +33,39 @@ const ListItem = ({ _id, content: { title, description } }) => {
   );
 };
 
-const CustomListView = ({ data }) => {
+const CustomListView = ({ posts, postsLoading }) => {
   return (
-    <VStack
-      divider={<StackDivider color="gray.200" />}
-      spacing={4}
-      mt={4}
-      mb={4}
-      align="stretch"
-    >
-      {data.qandAS.map(({ _id, content }) => {
-        return <ListItem key={_id} _id={_id} content={content} />;
-      })}
-    </VStack>
+    <>
+      {postsLoading ? (
+        <VStack
+          divider={<StackDivider color="gray.200" />}
+          spacing={6}
+          mt={6}
+          mb={4}
+          align="normal"
+        >
+          {Array.from({ length: NUMBER_OF_SKELETONS }, (_, i) => (
+            <SkeletonText key={i} spacing={3}></SkeletonText>
+          ))}
+        </VStack>
+      ) : (
+        ''
+      )}
+      <Skeleton isLoaded={!postsLoading}>
+        <VStack
+          divider={<StackDivider color="gray.200" />}
+          spacing={4}
+          mt={4}
+          mb={4}
+          align="stretch"
+        >
+          {!postsLoading &&
+            posts.map(({ _id, content }) => {
+              return <ListItem key={_id} _id={_id} content={content} />;
+            })}
+        </VStack>
+      </Skeleton>
+    </>
   );
 };
 

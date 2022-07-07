@@ -1,37 +1,17 @@
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { useRouter } from 'next/router';
-import { Box, Text, Heading, Divider, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Heading,
+  Divider,
+  Skeleton,
+  SkeletonText,
+  VStack,
+  useToast,
+} from '@chakra-ui/react';
 import AnswerForm from './AnswerForm';
-
-const ADD_ANSWER = gql`
-  mutation insertOneAnswer($data: AnswerInsertInput!) {
-    insertOneAnswer(data: $data) {
-      _id
-      content
-      questionId
-    }
-  }
-`;
-
-const UPDATE_POST = gql`
-  mutation updateOneQandA($query: QandAQueryInput, $set: QandAUpdateInput!) {
-    updateOneQandA(query: $query, set: $set) {
-      _id
-      content {
-        comments {
-          _id
-          content
-          questionId
-        }
-        description
-        title
-      }
-      latest_time_updated
-      time_posted
-    }
-  }
-`;
+import { ADD_ANSWER } from '../utils/graphql';
 
 const MONTH_NAMES = [
   'January',
@@ -48,24 +28,27 @@ const MONTH_NAMES = [
   'December',
 ];
 
-const PostCard = ({ post }) => {
-  const { _id, content, time_posted } = post;
-  const [addAnswer, { loading, error }] = useMutation(ADD_ANSWER);
+const PostCard = ({ post, questionLoading, refetchAnswers }) => {
+  const { _id, content, time_posted } = !questionLoading ? post : {};
+  const [addAnswer, { loading: answerLoading, error: answerError }] =
+    useMutation(ADD_ANSWER);
   const [comment, setComment] = useState('');
   const date = new Date(time_posted);
-  const router = useRouter();
   const toast = useToast();
-
-  const refreshData = () => router.replace(router.asPath);
+  const invalidToast = 'invalid-comment-toast';
 
   // Show toast
-  const showToast = ({ title, status }) =>
-    toast({
-      title: title,
-      status: status,
-      duration: 5000,
-      isClosable: true,
-    });
+  const showToast = ({ title, status, id = undefined }) => {
+    if (!toast.isActive(id)) {
+      toast({
+        id,
+        title,
+        status,
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
 
   // Sets comment
   const updateComment = ({ target: { value } }) => {
@@ -75,6 +58,15 @@ const PostCard = ({ post }) => {
   // Submit new comment
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!comment) {
+      setComment('');
+      showToast({
+        title: 'Invalid comment',
+        status: 'error',
+        id: invalidToast,
+      });
+      return;
+    }
     await addAnswer({
       variables: {
         data: {
@@ -83,8 +75,8 @@ const PostCard = ({ post }) => {
         },
       },
     });
-    if (error) {
-      console.log(`Submission error: ${error.message}`);
+    if (answerError) {
+      console.log(`Submission error: ${answerError.message}`);
       showToast({
         title: 'Unable to submit comment',
         status: 'error',
@@ -97,7 +89,7 @@ const PostCard = ({ post }) => {
       title: 'Comment submitted',
       status: 'success',
     });
-    refreshData();
+    refetchAnswers();
   };
 
   return (
@@ -112,25 +104,44 @@ const PostCard = ({ post }) => {
         // TODO: Add users to questions/posts
         /* <Card.Text className="questionName">John Do</Card.Text> */
       }
-      <Text className="post-timestamp" fontWeight="bold" fontSize="sm">
-        {time_posted && date
-          ? `${
-              MONTH_NAMES[date.getMonth()]
-            } ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString()}`
-          : ''}
-      </Text>
-      <Heading className="post-title" mt={2}>
-        {content && content.title ? content.title : ''}
-      </Heading>
-      <Text className="post-description" mt={4}>
-        {content && content.description ? content.description : ''}
-      </Text>
+      <Skeleton
+        isLoaded={!questionLoading}
+        h={questionLoading ? '0.875rem' : 'auto'}
+      >
+        <Text className="post-timestamp" fontWeight="bold" fontSize="sm">
+          {time_posted && date
+            ? `${
+                MONTH_NAMES[date.getMonth()]
+              } ${date.getDate()}, ${date.getFullYear()} ${date.toLocaleTimeString()}`
+            : ''}
+        </Text>
+      </Skeleton>
+      <Skeleton
+        isLoaded={!questionLoading}
+        mt={questionLoading ? 6 : 0}
+        h={questionLoading ? '2.25rem' : 'auto'}
+      >
+        <Heading className="post-title" mt={2}>
+          {content && content.title ? content.title : ''}
+        </Heading>
+      </Skeleton>
+      <SkeletonText
+        isLoaded={!questionLoading}
+        noOfLines={2}
+        mt={questionLoading ? 8 : 0}
+        spacing={4}
+      >
+        <Text className="post-description" mt={4}>
+          {content && content.description ? content.description : ''}
+        </Text>
+      </SkeletonText>
       <Divider alignItems="center" my={6} />
       <AnswerForm
         handleSubmit={handleSubmit}
         updateComment={updateComment}
-        loading={loading}
+        loading={answerLoading}
         comment={comment}
+        disabled={questionLoading}
       />
     </Box>
   );

@@ -1,9 +1,12 @@
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { Container } from '@chakra-ui/react';
 import CustomListView from '../components/v2/CustomListView';
-import client from '../utils/graphql';
+import client, { GET_POSTS } from '../utils/graphql';
 
-const Home = ({ data }) => {
+const Home = () => {
+  const { data, loading, error } = useQuery(GET_POSTS);
+  const posts = data?.qandAS;
+
   return (
     <Container
       mt={4}
@@ -11,31 +14,9 @@ const Home = ({ data }) => {
       borderRadius="lg"
       borderColor="gray.200"
     >
-      <CustomListView data={data} />
+      <CustomListView posts={posts} postsLoading={loading} />
     </Container>
   );
 };
-
-export async function getServerSideProps() {
-  const { data } = await client.query({
-    query: gql`
-      query qandAS(
-        $query: QandAQueryInput
-        $limit: Int
-        $sortBy: QandASortByInput
-      ) {
-        qandAS(query: $query, limit: $limit, sortBy: $sortBy) {
-          _id
-          content {
-            description
-            title
-          }
-          time_posted
-        }
-      }
-    `,
-  });
-  return { props: { data } };
-}
 
 export default Home;
