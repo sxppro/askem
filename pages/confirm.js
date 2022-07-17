@@ -23,7 +23,6 @@ export async function getServerSideProps(context) {
 
   try {
     await confirmEmail();
-    router.push;
   } catch (err) {
     console.error(err);
   }
