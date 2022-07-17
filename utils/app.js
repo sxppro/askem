@@ -14,4 +14,11 @@ const getAccessToken = async () => {
   return app.currentUser.accessToken;
 };
 
-export { getAccessToken };
+const createNewUser = async (email, password) => {
+  if (!email || !password) {
+    return;
+  }
+  await app.emailPasswordAuth.registerUser({ email, password });
+};
+
+export { getAccessToken, createNewUser };
