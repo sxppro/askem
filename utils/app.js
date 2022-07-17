@@ -14,4 +14,11 @@ const getAccessToken = async () => {
   return app.currentUser.accessToken;
 };
 
-export { getAccessToken };
+const confirmUser = async (token, tokenId) => {
+  if (!token || !tokenId) {
+    return;
+  }
+  await app.emailPasswordAuth.confirmUser({ token, tokenId });
+};
+
+export { getAccessToken, confirmUser };

@@ -1,0 +1,39 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { Center, VStack, Heading, Spinner } from '@chakra-ui/react';
+import { confirmUser } from '../utils/app';
+
+const ConfirmationPage = () => {
+  return (
+    <Center h={'calc(100vh - 64px)'} onLoad>
+      <VStack spacing={8}>
+        <Heading size="lg">Confirming ...</Heading>
+        <Spinner size="xl" />
+      </VStack>
+    </Center>
+  );
+};
+
+export async function getServerSideProps(context) {
+  const { query } = context;
+  const confirmEmail = async () => {
+    const { token, tokenId } = query;
+    await confirmUser(token, tokenId);
+  };
+
+  try {
+    await confirmEmail();
+    router.push;
+  } catch (err) {
+    console.error(err);
+  }
+
+  return {
+    redirect: {
+      destination: '/login',
+      permanent: true,
+    },
+  };
+}
+
+export default ConfirmationPage;
