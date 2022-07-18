@@ -15,8 +15,8 @@ const ConfirmationPage = () => {
 };
 
 export async function getServerSideProps(context) {
-  const { query } = context;
   const confirmEmail = async () => {
+    const { query } = context;
     const { token, tokenId } = query;
     await confirmUser(token, tokenId);
   };
