@@ -13,7 +13,7 @@ import * as React from 'react';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
 
 export const PasswordField = React.forwardRef(
-  ({ id, fieldName, autoComplete, updateState }, ref) => {
+  ({ id, fieldName, autoComplete, helperText, updateState }, ref) => {
     const { isOpen, onToggle } = useDisclosure();
     const inputRef = React.useRef(null);
     const mergeRef = useMergeRefs(inputRef, ref);
@@ -50,7 +50,7 @@ export const PasswordField = React.forwardRef(
             required
           />
         </InputGroup>
-        <FormHelperText>At least 6 characters please :)</FormHelperText>
+        {helperText ? <FormHelperText>{helperText}</FormHelperText> : ''}
       </FormControl>
     );
   }

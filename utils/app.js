@@ -16,9 +16,16 @@ const getAccessToken = async () => {
 
 const createNewUser = async (email, password) => {
   if (!email || !password) {
-    return;
+    throw new Error('Email and password are required');
   }
   await app.emailPasswordAuth.registerUser({ email, password });
 };
 
-export { getAccessToken, createNewUser };
+const resetPassword = async (token, tokenId, password) => {
+  if (!token || !tokenId || !password) {
+    throw new Error('Password, token and token ID are required');
+  }
+  await app.emailPasswordAuth.resetPassword(token, tokenId, password);
+};
+
+export { getAccessToken, createNewUser, resetPassword };

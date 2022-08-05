@@ -80,7 +80,11 @@ const SignupPage = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     validateInputs();
-    await createNewUser(email, password);
+    try {
+      await createNewUser(email, password);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
