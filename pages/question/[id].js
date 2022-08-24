@@ -42,7 +42,7 @@ const Post = () => {
         refetchAnswers={answersRefetch}
       />
       <Heading size="2xl" p={4}>
-        Comments
+        {answers && answers.length > 0 ? 'Comments' : ''}
       </Heading>
       <Skeleton isLoaded={!answersLoading}>
         <VStack alignItems={'flex-start'} align="stretch" spacing={4}>
