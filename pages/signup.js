@@ -79,11 +79,12 @@ const SignupPage = () => {
   // Handle signup
   const handleSignup = async (e) => {
     e.preventDefault();
-    validateInputs();
-    try {
-      await createNewUser(email, password);
-    } catch (err) {
-      console.error(err);
+    if (validateInputs()) {
+      try {
+        await createNewUser(email, password);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
@@ -138,13 +139,9 @@ const SignupPage = () => {
             base: '4',
             sm: '10',
           }}
-          bg={useBreakpointValue({
-            base: 'transparent',
-            sm: useColorModeValue('gray.50', 'gray.700'),
-          })}
           boxShadow={{
             base: 'none',
-            sm: 'lg',
+            sm: 'xl',
           }}
           borderRadius={{
             base: 'none',
@@ -152,7 +149,12 @@ const SignupPage = () => {
           }}
         >
           <Stack spacing="6">
-            <Stack spacing="5">
+            <Stack
+              spacing="5"
+              as="form"
+              id="signup-form"
+              onSubmit={handleSignup}
+            >
               <FormControl>
                 <FormLabel htmlFor="name">Name</FormLabel>
                 <Input
@@ -181,7 +183,9 @@ const SignupPage = () => {
               />
             </Stack>
             <Stack spacing="6">
-              <Button colorScheme="purple">Create an account</Button>
+              <Button colorScheme="purple" type="submit" form="signup-form">
+                Create an account
+              </Button>
               <HStack>
                 <Divider />
                 <Text fontSize="sm" whiteSpace="nowrap" color="muted">
