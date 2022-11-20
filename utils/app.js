@@ -10,7 +10,6 @@ const getAccessToken = async () => {
   } else {
     await app.currentUser.refreshCustomData();
   }
-
   return app.currentUser.accessToken;
 };
 
@@ -21,6 +20,20 @@ const createNewUser = async (email, password) => {
   await app.emailPasswordAuth.registerUser({ email, password });
 };
 
+const login = async (email, password) => {
+  if (!email || !password) {
+    throw new Error('Email and password are required');
+  }
+  const credentials = Realm.Credentials.emailPassword(email, password);
+  try {
+    const user = await app.logIn(credentials);
+    console.assert(user.id === app.currentUser.id);
+    return user;
+  } catch (err) {
+    console.error('Failed to authenticate', err.message);
+  }
+};
+
 const resetPassword = async (token, tokenId, password) => {
   if (!token || !tokenId || !password) {
     throw new Error('Password, token and token ID are required');
@@ -28,4 +41,8 @@ const resetPassword = async (token, tokenId, password) => {
   await app.emailPasswordAuth.resetPassword(token, tokenId, password);
 };
 
-export { getAccessToken, createNewUser, resetPassword };
+const getUser = () => {
+  return app.currentUser;
+};
+
+export { getAccessToken, createNewUser, resetPassword, login, getUser };
