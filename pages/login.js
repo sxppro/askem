@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -12,7 +13,9 @@ import {
   Input,
   Stack,
   Text,
+  Link,
   useBreakpointValue,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { OAuthButtonGroup } from '../components/auth/OAuthButtonGroup';
@@ -75,9 +78,15 @@ const LoginPage = () => {
             </Heading>
             <HStack spacing="1" justify="center">
               <Text color="muted">Don&apos;t have an account?</Text>
-              <Button variant="link" colorScheme="blue">
-                Sign up
-              </Button>
+              <NextLink href="/signup" passHref>
+                <Link
+                  color={useColorModeValue('blue.500', 'blue.200')}
+                  fontWeight="bold"
+                  _hover={{ textDecoration: 'none' }}
+                >
+                  Sign up
+                </Link>
+              </NextLink>
             </HStack>
           </Stack>
         </Stack>

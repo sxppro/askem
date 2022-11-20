@@ -1,10 +1,13 @@
-import { gql, useQuery } from '@apollo/client';
+import { useContext } from 'react';
+import { useQuery } from '@apollo/client';
 import { Container } from '@chakra-ui/react';
 import CustomListView from '../components/v2/CustomListView';
-import client, { GET_POSTS } from '../utils/graphql';
+import { GET_POSTS } from '../utils/graphql';
+import { AuthContext } from '../utils/contexts';
 
 const Home = () => {
   const { data, loading, error } = useQuery(GET_POSTS);
+  const auth = useContext(AuthContext);
   const posts = data?.qandAS;
 
   return (

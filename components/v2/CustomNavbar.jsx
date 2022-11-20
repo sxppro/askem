@@ -51,6 +51,7 @@ const CustomNavbar = ({ displayAction }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === 'dark';
   const user = useContext(AuthContext);
+  const isAnon = user.providerType === 'anon-user';
 
   return (
     <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} boxShadow="base">
@@ -95,7 +96,7 @@ const CustomNavbar = ({ displayAction }) => {
             icon={isDark ? <SunIcon /> : <MoonIcon />}
             mr={4}
           />
-          {user ? (
+          {!isAnon ? (
             <>
               <SubmitPost />
               <Menu>
