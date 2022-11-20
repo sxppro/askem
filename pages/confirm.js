@@ -1,9 +1,32 @@
 import { useState, useEffect } from 'react';
-import { Center, VStack, Heading, Spinner } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { Center, VStack, Heading, Spinner, useToast } from '@chakra-ui/react';
 import { confirmUser } from '../utils/app';
 
-const ConfirmationPage = () => {
+const ConfirmationPage = ({ isValidated }) => {
   const [fade, setFade] = useState({ fade: 'fade-in' });
+  const router = useRouter();
+  const toast = useToast();
+
+  isValidated
+    ? !toast.isActive('confirm')
+      ? toast({
+          title: 'Account confirmed',
+          description: 'Redirecting to login in 5 seconds',
+          duration: 9000,
+          status: 'success',
+          id: 'confirm',
+        })
+      : ''
+    : !toast.isActive('unconfirm')
+    ? toast({
+        title: 'Error',
+        description: 'Confirmation unsuccessful',
+        duration: null,
+        status: 'error',
+        id: 'unconfirm',
+      })
+    : '';
 
   useEffect(() => {
     const fadeTimeout = setInterval(() => {
@@ -15,6 +38,14 @@ const ConfirmationPage = () => {
     return () => clearInterval(fadeTimeout);
   }, [fade]);
 
+  useEffect(() => {
+    if (isValidated) {
+      setTimeout(() => {
+        router.push('/login');
+      }, 5000);
+    }
+  });
+
   return (
     <Center h={'calc(100vh - 64px)'} onLoad>
       <VStack spacing={8}>
@@ -23,7 +54,7 @@ const ConfirmationPage = () => {
           transition={'opacity 1.5s ease'}
           opacity={fade.fade === 'fade-out' ? 0.3 : 1}
         >
-          Confirming
+          {isValidated ? 'Redirecting' : 'Confirming'}
         </Heading>
         <Spinner size="xl" />
       </VStack>

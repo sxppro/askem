@@ -16,7 +16,7 @@ const getAccessToken = async () => {
 
 const confirmUser = async (token, tokenId) => {
   if (!token || !tokenId) {
-    return;
+    throw new Error('Invalid token or token ID');
   }
   await app.emailPasswordAuth.confirmUser({ token, tokenId });
 };
