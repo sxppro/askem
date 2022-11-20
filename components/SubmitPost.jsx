@@ -20,7 +20,6 @@ const SubmitPost = () => {
       <Button
         onClick={onOpen}
         leftIcon={<AddIcon />}
-        size="sm"
         colorScheme="purple"
         boxShadow="base"
         mr={4}

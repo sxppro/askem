@@ -97,15 +97,6 @@ const CustomNavbar = ({ displayAction }) => {
           />
           {user ? (
             <>
-              <Link href="/signup" _hover={{ textDecoration: 'none' }}>
-                <Button mr={4}>Sign Up</Button>
-              </Link>
-              <Link href="/login" _hover={{ textDecoration: 'none' }}>
-                <Button colorScheme="purple">Login</Button>
-              </Link>
-            </>
-          ) : (
-            <>
               <SubmitPost />
               <Menu>
                 <MenuButton
@@ -117,7 +108,6 @@ const CustomNavbar = ({ displayAction }) => {
                   boxShadow="base"
                 >
                   <Avatar
-                    size={'sm'}
                     src={
                       'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
                     }
@@ -129,6 +119,15 @@ const CustomNavbar = ({ displayAction }) => {
                   <MenuItem>Sign Out (WIP)</MenuItem>
                 </MenuList>
               </Menu>
+            </>
+          ) : (
+            <>
+              <Link href="/signup" _hover={{ textDecoration: 'none' }}>
+                <Button mr={4}>Sign Up</Button>
+              </Link>
+              <Link href="/login" _hover={{ textDecoration: 'none' }}>
+                <Button colorScheme="purple">Login</Button>
+              </Link>
             </>
           )}
         </Flex>
