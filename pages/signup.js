@@ -25,6 +25,7 @@ const SignupPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
 
   const showToast = ({ title, status, id = undefined }) => {
@@ -77,12 +78,15 @@ const SignupPage = () => {
   };
 
   // Handle signup
-  const handleSignup = async (e) => {
-    e.preventDefault();
+  const handleSignup = async () => {
     if (validateInputs()) {
       try {
+        setLoading(true);
         await createNewUser(email, password);
+        setLoading(false);
+        router.push('/');
       } catch (err) {
+        setLoading(false);
         console.error(err);
       }
     }
@@ -153,7 +157,10 @@ const SignupPage = () => {
               spacing="5"
               as="form"
               id="signup-form"
-              onSubmit={handleSignup}
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSignup();
+              }}
             >
               <FormControl>
                 <FormLabel htmlFor="name">Name</FormLabel>
@@ -183,7 +190,12 @@ const SignupPage = () => {
               />
             </Stack>
             <Stack spacing="6">
-              <Button colorScheme="purple" type="submit" form="signup-form">
+              <Button
+                colorScheme="purple"
+                type="submit"
+                form="signup-form"
+                isLoading={loading}
+              >
                 Create an account
               </Button>
               <HStack>

@@ -13,16 +13,36 @@ import {
   Stack,
   Text,
   useBreakpointValue,
-  useColorModeValue,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { OAuthButtonGroup } from '../components/auth/OAuthButtonGroup';
 import { PasswordField } from '../components/auth/PasswordField';
+import { login } from '../utils/app';
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
+  const updateEmail = ({ target: { value } }) => {
+    setEmail(value);
+  };
   const updatePassword = ({ target: { value } }) => {
     setPassword(value);
+  };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      await login(email, password);
+      setLoading(false);
+      router.push('/');
+    } catch (err) {
+      setLoading(false);
+      console.error(err);
+    }
   };
 
   return (
@@ -84,10 +104,20 @@ const LoginPage = () => {
           }}
         >
           <Stack spacing="6">
-            <Stack spacing="5">
+            <Stack
+              spacing="5"
+              as="form"
+              id="signin-form"
+              onSubmit={handleSignIn}
+            >
               <FormControl>
                 <FormLabel htmlFor="email">Email</FormLabel>
-                <Input id="email" type="email" />
+                <Input
+                  id="email"
+                  type="email"
+                  onChange={updateEmail}
+                  required
+                />
               </FormControl>
               <PasswordField
                 id="password"
@@ -103,7 +133,14 @@ const LoginPage = () => {
               </Button>
             </HStack>
             <Stack spacing="6">
-              <Button colorScheme="purple">Sign in</Button>
+              <Button
+                type="submit"
+                form="signin-form"
+                colorScheme="purple"
+                isLoading={loading}
+              >
+                Sign in
+              </Button>
               <HStack>
                 <Divider />
                 <Text fontSize="sm" whiteSpace="nowrap" color="muted">
