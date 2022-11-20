@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { Center, VStack, Heading, Spinner } from '@chakra-ui/react';
 import { confirmUser } from '../utils/app';
 
